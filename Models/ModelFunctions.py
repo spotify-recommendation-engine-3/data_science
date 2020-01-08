@@ -29,4 +29,5 @@ def suggest_songs(source_song, model):
     """ Preprecesses source song, use it to make suggestions from the database """
     source_song = preprocess(source_song)
     recommendations = nn.kneighbors(source_soung)[1][0]
-    return y.iloc[recommendations]
+    recommendations_dict = y.iloc[recommendations].T.to_dict()
+    return recommendations_dict
