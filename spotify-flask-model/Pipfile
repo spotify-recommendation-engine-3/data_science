@@ -13,6 +13,7 @@ pandas = "*"
 requests = "*"
 scikit-learn = "*"
 scipy = "*"
+pdb = "*"
 
 [requires]
 python_version = "3.7"
