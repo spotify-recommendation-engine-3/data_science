@@ -1,2 +1,2 @@
 
-# http://spotify-flask-model.herokuapp.com/
+# http://spotify-flask-model.herokuapp.com/pred
