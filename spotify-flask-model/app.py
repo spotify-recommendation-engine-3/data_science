@@ -1,14 +1,12 @@
 import pandas as pd
-import pdb
 from flask import Flask, jsonify, request
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neighbors import NearestNeighbors
 
 app = Flask(__name__)
 
-infile = "https://raw.githubusercontent.com/Tclack88/Machine-Learning-Projects/master/SpotifyAudioFeaturesApril2019.csv"
+infile = "https://raw.githubusercontent.com/spotify-recommendation-engine-3/data_science/master/Data/SpotifyAudioFeaturesApril2019_duplicates_removed.csv"
 songs_df = pd.read_csv(infile)
-
 y = songs_df[songs_df.columns[:3]]
 X = songs_df[songs_df.columns[3:]]
 
@@ -21,7 +19,6 @@ def preprocess(df):
     df = df.drop(columns=drop_cols)
     scaler = MinMaxScaler()
     scaler.fit_transform(df)
-    
     return df
 
 def create_model(X, n_neighbors=10):
@@ -33,7 +30,7 @@ def create_model(X, n_neighbors=10):
 def suggest_songs(source_song, model):
     """ Preprecesses source song, use it to make suggestions from the database """
     source_song = preprocess(source_song)
-    recommendations = model.kneighbors(source_song)[1][0]
+    recommendations = model.kneighbors(source_song)[1][0][1:] #remove 1st result (source)
     recommendations_dict = y.iloc[recommendations].T.to_dict()
     return recommendations_dict
 
