@@ -159,7 +159,7 @@ def preprocess(df):
     df = df.drop(columns=drop_cols)
     return df
 
-def create_model(X, n_neighbors=10):
+def create_model(X, n_neighbors=11):
     """ Insantiate nearest neighbor model """
     model = NearestNeighbors(n_neighbors=n_neighbors, algorithm='kd_tree')
     model.fit(X)
