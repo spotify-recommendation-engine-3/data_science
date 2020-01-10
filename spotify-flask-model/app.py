@@ -141,7 +141,7 @@ def spider_plot(df_with_titles):
               color='grey')
     
     # show the plot
-    ax.legend()
+    ax.legend(loc='lower center')
 
     pic_IObytes = io.BytesIO()
     plt.savefig(pic_IObytes,  format='png', 
