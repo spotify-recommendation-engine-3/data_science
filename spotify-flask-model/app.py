@@ -2,11 +2,19 @@ import pandas as pd
 from flask import Flask, jsonify, request
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neighbors import NearestNeighbors
+from flask_cors import CORS
+from sqlalchemy import create_engine
+
 
 app = Flask(__name__)
+CORS(app)
 
-infile = "https://raw.githubusercontent.com/spotify-recommendation-engine-3/data_science/master/Data/SpotifyAudioFeaturesApril2019_duplicates_removed.csv"
-songs_df = pd.read_csv(infile)
+engine = create_engine('sqlite:///db.sqlite3', echo=False)
+songs_df =  pd.read_sql_table('songs', 'sqlite:///db.sqlite3')
+
+
+# infile = "https://raw.githubusercontent.com/spotify-recommendation-engine-3/data_science/master/Data/SpotifyAudioFeaturesApril2019_duplicates_removed.csv"
+# songs_df = pd.read_csv(infile)
 y = songs_df[songs_df.columns[:3]]
 X = songs_df[songs_df.columns[3:]]
 
