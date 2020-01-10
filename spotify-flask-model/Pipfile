@@ -15,6 +15,7 @@ scikit-learn = "*"
 scipy = "*"
 matplotlib = "*"
 flask-cors = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"
