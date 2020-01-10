@@ -1,4 +1,10 @@
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import io
+import base64
+
+from math import pi
 from flask import Flask, jsonify, request
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neighbors import NearestNeighbors
@@ -9,12 +15,12 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 CORS(app)
 
-engine = create_engine('sqlite:///db.sqlite3', echo=False)
-songs_df =  pd.read_sql_table('songs', 'sqlite:///db.sqlite3')
+# define connection engine parameters
+engine = create_engine("postgres://fopvuysq:0-Bj06RqDRq3dw_kJk_5nbLitGQuN5KD@rajje.db.elephantsql.com:5432/fopvuysq")
 
+# read from hosted sql table and save to pandas df
+songs_df = pd.read_sql_table('songs_df', con=engine)
 
-# infile = "https://raw.githubusercontent.com/spotify-recommendation-engine-3/data_science/master/Data/SpotifyAudioFeaturesApril2019_duplicates_removed.csv"
-# songs_df = pd.read_csv(infile)
 y = songs_df[songs_df.columns[:3]]
 X = songs_df[songs_df.columns[3:]]
 
@@ -171,8 +177,8 @@ def suggest_songs(source_song, model):
     songs_df_norm[numeric_cols] = (df_num - df_num.mean()) / df_num.std()
     pic_hash = spider_plot(songs_df_norm.iloc[recommendations])
     recommendations_dict = y.iloc[recommendations][1:].reset_index(drop=True).T.to_dict()
-    recommendations_dict['encoded_image'] = pic_hash
-    print(recommendations_dict)
+    recommendations_dict[10] = str(pic_hash)
+    
     return recommendations_dict
 
 my_model = create_model(preprocess(X))
