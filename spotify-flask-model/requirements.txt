@@ -5,3 +5,6 @@ pandas==0.25.3
 requests==2.22.0
 scikit-learn==0.22.1
 scipy==1.4.1
+matplotlib==3.1.2
+Flask-Cors==3.0.8
+psycopg2==2.8.4
